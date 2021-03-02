@@ -1,9 +1,4 @@
-"""
-Export the data from database to JSON file
-Filename should be: authors.json, books.json
-If specified by --export EXPORT flag in command line
-"""
-
+"""Processing database"""
 import json
 import sys
 
@@ -11,6 +6,7 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 import setup
+
 
 def get_db():
     load_dotenv()
@@ -28,6 +24,11 @@ def get_db():
 
 
 def export_json(collection, file):
+    """
+    Export the data from database to JSON file
+    Filename should be: authors.json, books.json
+    If specified by --export EXPORT flag in command line
+    """
     cursor = collection.find({}, {"_id": False})
     list_cur = list(cursor)
     json_data = json.dumps(list_cur, indent=4)
@@ -39,14 +40,12 @@ def export_json(collection, file):
     get_db()[2].close()
 
 
-""" 
-Import JSON file into database
-Filename should be: authors.json, books.json
-If specified by --update UPDATE flag in command line
-"""
-
-
 def import_json(collection, file):
+    """
+    Import JSON file into database
+    Filename should be: authors.json, books.json
+    If specified by --update UPDATE flag in command line
+    """
     try:
         with open(file) as f:
             data = json.load(f)
