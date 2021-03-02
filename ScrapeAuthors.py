@@ -4,15 +4,17 @@ from bs4 import BeautifulSoup
 import setup
 import re
 
-"""Return the name of the author"""
+"""
+Scraping for authors
+Have attributes:
+name, author_url, author_id, rating, rating_count, review_count, image_url, related_authors, author_books
+The traversal order is visiting the related authors listed in the GoodReads website.
+"""
 
 
 def get_name_author(soup):
     name = soup.find("meta", property="og:title")["content"]
     return name
-
-
-"""Return the id of the author"""
 
 
 def get_id_author(url):

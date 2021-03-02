@@ -12,6 +12,7 @@ def main():
 
     book_number = inputs.book_num
     author_number = inputs.author_num
+    # if the url number input is not valid, error message generated and exit the program
     if book_number > 200:
         sys.exit("Invalid input. Please enter a book number < 200")
     if author_number > 50:
@@ -25,6 +26,7 @@ def main():
     author_collection = get_db()[0]
     for i in range(book_number):
         book_data = scrape_book(i)
+        # only insert into database if the data previously not exist
         if book_collection.count_documents(book_data) == 0:
             book_collection.insert_one(book_data)
 
@@ -33,6 +35,7 @@ def main():
 
     for j in range(author_number):
         author_data = scrape_author(j)
+        # only insert into database if the data previously not exist
         if author_collection.count_documents(author_data) == 0:
             author_collection.insert_one(author_data)
 

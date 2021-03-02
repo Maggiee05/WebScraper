@@ -14,13 +14,19 @@ def get_db():
     mydb = myclient["GoodReads"]
     authors_info = mydb.authors
     books_info = mydb.books
-
     # record = {"name": "J.K. Rowling",
     #           "author_url": "https://www.goodreads.com/author/show/1077326.J_K_Rowling"}
     #
     # authors_info.insert_one(record)
 
     return authors_info, books_info, myclient
+
+
+""" 
+Export the data from database to JSON file
+Filename should be: authors.json, books.json
+If specified by --export EXPORT flag in command line
+"""
 
 
 def export_json(collection, file):
@@ -35,14 +41,26 @@ def export_json(collection, file):
     get_db()[2].close()
 
 
-def import_json(collection, file):
-    with open(file) as f:
-        data = json.load(f)
-        if isinstance(data, list):
-            collection.insert_many(data)
-            print("Successfully insert into authors database")
-        else:
-            collection.insert_one(data)
-    f.close()
+""" 
+Import JSON file into database
+Filename should be: authors.json, books.json
+If specified by --update UPDATE flag in command line
+"""
 
-    get_db()[2].close()
+
+def import_json(collection, file):
+    try:
+        with open(file) as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                collection.insert_many(data)
+                print("Successfully insert into authors database")
+            else:
+                collection.insert_one(data)
+        f.close()
+
+        get_db()[2].close()
+
+    except:
+        # If importing JSON file into database failed, error message generates and exit the program
+        sys.exit("Insert/Update into database failed")

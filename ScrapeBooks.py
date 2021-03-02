@@ -5,6 +5,13 @@ from bs4 import BeautifulSoup
 import setup
 import re
 
+"""
+Scraping for books
+Have attributes:
+book_url, title, book_id, ISBN, author_url, author, rating, rating_count, review_count, image_url, similar_books
+The traversal order is visiting similar books listed in the GoodReads website.
+"""
+
 
 def get_title_book(soup):
     title = soup.find("h1", id="bookTitle").text.strip()
@@ -84,6 +91,7 @@ def scrape_book(idx):
         source = urlopen(url)
         soup = BeautifulSoup(source, "html.parser")
     except:
+        # if the url provided is not valid, error message generated and exit the program
         sys.exit("Book URL not valid")
 
     book["title"] = get_title_book(soup)
