@@ -1,15 +1,15 @@
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-
-import setup
-import re
-
 """
 Scraping for authors
 Have attributes:
 name, author_url, author_id, rating, rating_count, review_count, image_url, related_authors, author_books
 The traversal order is visiting the related authors listed in the GoodReads website.
 """
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+import setup
+import re
 
 
 def get_name_author(soup):

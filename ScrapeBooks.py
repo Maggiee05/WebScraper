@@ -1,16 +1,16 @@
-import sys
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-
-import setup
-import re
-
 """
 Scraping for books
 Have attributes:
 book_url, title, book_id, ISBN, author_url, author, rating, rating_count, review_count, image_url, similar_books
 The traversal order is visiting similar books listed in the GoodReads website.
 """
+
+import sys
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+import setup
+import re
 
 
 def get_title_book(soup):

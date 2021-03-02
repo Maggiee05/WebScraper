@@ -1,3 +1,9 @@
+"""
+Export the data from database to JSON file
+Filename should be: authors.json, books.json
+If specified by --export EXPORT flag in command line
+"""
+
 import json
 import sys
 
@@ -5,7 +11,6 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 import setup
-
 
 def get_db():
     load_dotenv()
@@ -20,13 +25,6 @@ def get_db():
     # authors_info.insert_one(record)
 
     return authors_info, books_info, myclient
-
-
-""" 
-Export the data from database to JSON file
-Filename should be: authors.json, books.json
-If specified by --export EXPORT flag in command line
-"""
 
 
 def export_json(collection, file):
