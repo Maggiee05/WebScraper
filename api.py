@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, request, jsonify, json, make_response
 
 import setup
@@ -159,11 +161,12 @@ def post_scrape_author():
     """
 
     author_info = request.args['attr']
+    url_author = "https://www.goodreads.com/author/show/" + author_info
     author_name = author_info.split('.')[1]
-    url_author = "https://www.goodreads.com/book/show/" + author_info
-    setup.authors_list.append({"name": author_name, "author_url": url_author})
+    name = ' '.join(re.findall('[A-Z][a-z]*', author_name))
+    setup.authors_list.append({"name": name, "author_url": url_author})
     author_data = scrape_author(0)
-    if db.authors.count_documents(author_data) == 0:
+    if db.authors.count_documents({"author_url": url_author}) == 0:
         db.authors.insert_one(author_data)
     return "Successfully scrape one author", 200
 

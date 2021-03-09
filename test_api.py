@@ -172,11 +172,11 @@ def test_scrape_book(client):
     assert get_res.status_code == 200
 
 
-# def test_scrape_author(client):
-#     res = client.post('/scrape/author?attr=3354.HarukiMurakami')
-#     assert res.status_code == 200
-#     get_res = client.get('/author?id=3354')
-#     assert get_res.status_code == 200
+def test_scrape_author(client):
+    res = client.post('/scrape/author?attr=3354.HarukiMurakami')
+    assert res.status_code == 200
+    get_res = client.get('/author?id=3354')
+    assert get_res.status_code == 200
 
 
 def test_delete_book(client):
