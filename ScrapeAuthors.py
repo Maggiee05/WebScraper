@@ -11,6 +11,8 @@ from bs4 import BeautifulSoup
 import setup
 import re
 
+setup.authors_list = []
+
 
 def get_name_author(soup):
     name = soup.find("meta", property="og:title")["content"]
@@ -25,17 +27,17 @@ def get_id_author(url):
 
 def get_rating_author(soup):
     ratings = soup.find("span", itemprop="ratingValue").text.strip()
-    return ratings
+    return float(ratings)
 
 
 def get_rating_count_author(soup):
     count = soup.find("span", itemprop="ratingCount")["content"].strip()
-    return count
+    return int(count)
 
 
 def get_review_count_author(soup):
     count = soup.find("span", itemprop="reviewCount")["content"].strip()
-    return count
+    return int(count)
 
 
 def get_image_url_author(soup, name):

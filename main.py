@@ -6,6 +6,11 @@ from ScrapeAuthors import scrape_author
 import setup
 from db import export_json, get_db, import_json
 
+# import click
+
+# @click.command()
+# @click.option("--export", help="Export json file from database")
+# @click.option("--update", help="Insert/Update json file into database")
 
 def main():
     inputs = command_line()
@@ -13,10 +18,8 @@ def main():
     book_number = inputs.book_num
     author_number = inputs.author_num
     # if the url number input is not valid, error message generated and exit the program
-    if book_number > 200:
-        sys.exit("Invalid input. Please enter a book number < 200")
-    if author_number > 50:
-        sys.exit("Invalid input. Please enter an author number < 50")
+    if (book_number > 2000) or (author_number > 2000):
+        sys.exit("Invalid input. Please enter a number < 2000")
 
     # starting point for scraping
     start_url = inputs.starting_url
@@ -40,12 +43,12 @@ def main():
             author_collection.insert_one(author_data)
 
     if inputs.export:
-        export_json(author_collection, "authors.json")
-        export_json(book_collection, "books.json")
+        export_json(author_collection, "JsonData/authors.json")
+        export_json(book_collection, "JsonData/books.json")
 
     if inputs.update:
-        import_json(author_collection, "authors.json")
-        import_json(book_collection, "books.json")
+        import_json(author_collection, "JsonData/authors.json")
+        import_json(book_collection, "JsonData/books.json")
 
 
 def command_line():
@@ -53,11 +56,16 @@ def command_line():
     parser.add_argument("starting_url", type=str, help="Starting url for the scraping")
     parser.add_argument("book_num", type=int, help="Number of books to scrape")
     parser.add_argument("author_num", type=int, help="Number of authors to scrape")
+
+    # @click.option("--export", help="Export json file from database")
     parser.add_argument("--export", help="Export json file from database")
     parser.add_argument("--update", help="Insert/Update json file into database")
 
     args = parser.parse_args()
     return args
+
+# def export_command():
+
 
 
 if __name__ == "__main__":
