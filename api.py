@@ -1,13 +1,12 @@
 import re
 
-from flask import Flask, request, jsonify, json, make_response
+from flask import Flask, request, jsonify, json
 
 import setup
 from ScrapeAuthors import scrape_author
 from ScrapeBooks import scrape_book
 from db import get_db
 
-# from queryInterpreter import query_interpreter
 from queryInterpreter import query_interpreter
 
 app = Flask(__name__)
@@ -23,6 +22,8 @@ def home_page():
 
 @app.route('/book', methods=['GET'])
 def get_book():
+    """Get book information for given ID"""
+
     if list(request.args.keys())[0] != 'id':
         return "Bad request. Please enter a book_id", 400
 
@@ -37,6 +38,8 @@ def get_book():
 
 @app.route('/author', methods=['GET'])
 def get_author():
+    """Get author information for given ID"""
+
     if list(request.args.keys())[0] != 'id':
         return "Bad request. Please enter an author_id", 400
 
@@ -51,6 +54,8 @@ def get_author():
 
 @app.route('/search', methods=['GET'])
 def search_query():
+    """Get search results based on specified query string"""
+
     query_str = request.args['q']
     data = query_interpreter(query_str, db)
     data_cur = list(data)
@@ -62,6 +67,8 @@ def search_query():
 
 @app.route('/book', methods=['PUT'])
 def put_book():
+    """Put, or update an author specified by the ID."""
+
     book_id = request.args['id']
     if book_id is None:
         return "Bad request. Please enter a book_id", 400
@@ -79,6 +86,8 @@ def put_book():
 
 @app.route('/author', methods=['PUT'])
 def put_author():
+    """Put, or update a book specified by the ID."""
+
     author_id = request.args['id']
     if author_id is None:
         return "Bad request. Please enter an author_id", 400
@@ -96,6 +105,8 @@ def put_author():
 
 @app.route('/book', methods=['POST'])
 def post_book():
+    """Leverage POST requests to ADD A book to the backend (database)"""
+
     book_info = request.get_json()
     if (len(book_info) != 1) or (book_info is None):
         return "Bad request.Please enter only one valid book information", 400
@@ -107,6 +118,8 @@ def post_book():
 
 @app.route('/books', methods=['POST'])
 def post_books():
+    """Leverage POST requests to ADD SEVERAL books to the backend (database)"""
+
     books_info = request.get_json()
     if (len(books_info) <= 1) or (books_info is None):
         return "Bad request.Please enter several valid books information", 400
@@ -119,6 +132,8 @@ def post_books():
 
 @app.route('/author', methods=['POST'])
 def post_author():
+    """Leverage POST requests to ADD An author to the backend (database)"""
+
     author_info = request.get_json()
     if (len(author_info) != 1) or (author_info is None):
         return "Bad request.Please enter only one valid author information", 400
@@ -130,6 +145,8 @@ def post_author():
 
 @app.route('/authors', methods=['POST'])
 def post_authors():
+    """Leverage POST requests to ADD SEVERAL authors to the backend (database)"""
+
     authors_info = request.get_json()
     if (len(authors_info) <= 1) or (authors_info is None):
         return "Bad request.Please enter several valid authors information", 400
@@ -174,6 +191,7 @@ def post_scrape_author():
 @app.route('/book', methods=['DELETE'])
 def delete_book():
     """ Delete book specified by the ID """
+
     book_id = request.args['id']
     if db.books.count_documents({"book_id": str(book_id)}) != 0:
         db.books.delete_one({"book_id": str(book_id)})
@@ -185,6 +203,7 @@ def delete_book():
 @app.route('/author', methods=['DELETE'])
 def delete_author():
     """ Delete author specified by the ID """
+
     author_id = request.args['id']
     if db.authors.count_documents({"author_id": str(author_id)}) != 0:
         db.authors.delete_one({"author_id": str(author_id)})
