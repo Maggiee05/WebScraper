@@ -23,9 +23,11 @@ class TestQuery(unittest.TestCase):
     def test_quote_operator(self):
         expression1 = 'aaa"12456"bbb'
         expression2 = 'aaa"121bb'
+        expression3 = '"123"'
         self.assertEqual('12456', quote_operator(expression1))
         self.assertEqual(('Bad request. Quotes not enclose correctly', 400),
                          quote_operator(expression2))
+        self.assertEqual('123', quote_operator(expression3))
 
     def test_logical_operator(self):
         expression1 = '>123 AND <500'
