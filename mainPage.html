@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- <script type="module" src="/static/script.js"></script> -->
+        <p>Enter the id to get book/author information (GET): </p>
+           
+        <form action="" method="get">
+            <p>
+                <label for="book_id" required>book_id :</label>
+                <input type="text" id="book_id">
+                <input type="button" value="Submit" id="getbookButton">
+            </p>
+     
+            <p>
+                <label for="author_id" required>author_id :</label>
+                <input type="text" id="author_id">
+                <input type="button" value="Submit" id="getauthorButton">
+            </p>
+        </form>
+        <div id="info1"></div>
+
+        <p>----------------</p>
+        <p>Enter the id to delete a book/author (DELETE): </p>
+        <form action="" method="get">
+            <p>
+                <label for="category" required>Category :</label>
+                <input type="text" id="category_del">
+                <label for="id" required>id :</label>
+                <input type="text" id="id_del">
+                <input type="button" value="Delete" id="deleteButton">
+            </p>
+        </form>
+        <div id="info2"></div>
+
+        <p>----------------</p>
+        <p>Enter the attributes to update a book/author (PUT): </p>
+        <form action="" method="get">
+            <p>
+                <label>Category :</label>
+                <input type="text" id="category_put">
+                <label>id : </label>
+                <input type="text" id="id_put">
+                <label>Attribute :</label>
+                <input type="text" id="attribute_put">
+                <label>Value :</label>
+                <input type="number" id="value_put">
+                <input type="button" value="Update" id="putButton">
+            </p>
+        </form>
+        <div id="info3"></div>
+
+        <p>----------------</p>
+        <p>Enter the attributes to insert a book/author (POST): </p>
+        <form action="" method="get">
+            <p>
+                <label>Category :</label>
+                <input type="text" id="category_put">
+                <label>id : </label>
+                <input type="text" id="id_put">
+                <input type="button" value="Insert" id="postButton">
+            </p>
+        </form>
+
+        <div id="dynamicCheck">
+            <input type="button" value="Add attribute" onclick="createNewElement();"/>
+         </div>
+         
+         <div id="info4"></div>
+
+     </body>
+
+</html>
+
+<script type="text/JavaScript">
+    function createNewElement() {
+
+        var txtNewInputBox = document.createElement('div');
+        txtNewInputBox.innerHTML = "<input type='text' id='newInputBox'>";
+        document.getElementById("info4").appendChild(txtNewInputBox);
+    }
+    </script>
+
+
+<script>
+    document.getElementById('getbookButton').onclick = function() {
+        var info_id = document.getElementById('book_id').value
+        var result = "---------------- </br>";
+        var url = 'http://127.0.0.1:5000/book?id=' + info_id;
+       axios.get(url).then( 
+           response => { 
+               var res = response.data;
+               for (item in res[0]) {
+                   if (item == '_id') {
+                       continue;
+                   }
+                   result += item + " :" + res[0][item] + "</br>";
+               }
+               document.getElementById('info1').innerHTML = result;
+            //    console.log(json_response); 
+           }, error => {
+            document.getElementById('info1').innerHTML = 
+            "No such book id in database. Please enter a valid book_id";
+           }
+       )
+       console.log("Successfully get book info");
+    }
+    // document.getElementById('getbookButton').onclick = get_requestt("book");
+</script>
+
+<script>
+    document.getElementById('getauthorButton').onclick = function() {
+        var info_id = document.getElementById('author_id').value
+        var result = "---------------- </br>";
+        var url = 'http://127.0.0.1:5000/author?id=' + info_id;
+       axios.get(url).then( 
+           response => { 
+               var res = response.data;
+               for (item in res[0]) {
+                   if (item == '_id') {
+                       continue;
+                   }
+                   result += item + " :" + res[0][item] + "</br>";
+               }
+               document.getElementById('info1').innerHTML = result;
+            //    console.log(json_response); 
+           }, error => {
+            document.getElementById('info1').innerHTML = 
+            "No such author id in database. Please enter a valid author_id";
+           }
+       )
+       console.log("Successfully get author info");
+    }
+    // document.getElementById('getauthorButton').onclick = get_requestt("author");
+</script>
+
+
+<script>
+    document.getElementById('deleteButton').onclick = function() {
+        var attr = document.getElementById('category_del').value;
+        var info_id = document.getElementById('id_del').value;
+        var result = "";
+        var url = 'http://127.0.0.1:5000/' + attr + '?id=' + info_id;
+        axios.delete(url).then( 
+           response => { 
+               document.getElementById('info2').innerHTML = 
+               "Successfully deleted " + attr + " with id: " + info_id;
+           }
+       ), error => {
+            document.getElementById('info2').innerHTML = 
+            "No such id exists in database. Please enter a valid id";
+           }
+       console.log("Successfully deleted");
+    }
+</script>
+
+<script>
+    document.getElementById('putButton').onclick = function() {
+        var category = document.getElementById('category_put').value;
+        var info_id = document.getElementById('id_put').value;
+        var attr = document.getElementById('attribute_put').value;
+        var value = document.getElementById('value_put').value;
+        var result = "";
+        var url = 'http://127.0.0.1:5000/' + category + '?id=' + info_id;
+        var new_dict = {};
+        new_dict[attr] = value;
+        axios.put(url, new_dict).then( 
+           response => { 
+               document.getElementById('info3').innerHTML = 
+               "Successfully updated the " + attr + " of the " + category;
+           }
+       ), error => {
+            document.getElementById('info3').innerHTML = 
+            "No such id exists in database. Please enter a valid id";
+           }
+       console.log("Successfully updated");
+    }
+</script>
+

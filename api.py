@@ -1,6 +1,9 @@
 import re
 
-from flask import Flask, request, jsonify, json
+import flask
+from flask import Flask, request, json, render_template
+
+# from flask_cors import CORS
 
 import setup
 from ScrapeAuthors import scrape_author
@@ -9,7 +12,9 @@ from db import get_db
 
 from queryInterpreter import query_interpreter
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
+# app = Flask(__name__)
+# CORS(app)
 
 myclient = get_db()[2]  # Getting the database
 db = myclient["GoodReads"]
@@ -17,7 +22,8 @@ db = myclient["GoodReads"]
 
 @app.route('/', methods=['GET'])
 def home_page():
-    return "GoodReads API home page"
+    return render_template('mainPage.html')
+    # return "GoodReads API home page"
 
 
 @app.route('/book', methods=['GET'])
@@ -210,6 +216,31 @@ def delete_author():
         return "Successfully deleted", 200
     else:
         return "author_id Not Found. Cannot be deleted", 404
+
+@app.route('/vis/top-books', methods=['GET'])
+def get_all_books():
+    """ Getting all the books """
+
+    book_info = db.books.find({}, {"_id": 0})
+    book_info_cur = list(book_info)
+    # print(book_info_cur[0]["rating"])
+    sorted_cur = sorted(book_info_cur, key = lambda i: int(i.get('rating', 0)), reverse=True)
+    if len(book_info_cur) != 0:
+        return json.dumps(sorted_cur, indent=4), 200
+    else:
+        return "Empty book collection in database", 404
+
+@app.route('/vis/top-authors', methods=['GET'])
+def get_all_authors():
+    """ Getting all the authors """
+
+    author_info = db.authors.find({}, {"_id": 0})
+    author_info_cur = list(author_info)
+    sorted_cur = sorted(author_info_cur, key = lambda i: int(i.get('rating', 0)), reverse=True)
+    if len(author_info_cur) != 0:
+        return json.dumps(sorted_cur, indent=4), 200
+    else:
+        return "Empty author collection in database", 404
 
 
 if __name__ == '__main__':

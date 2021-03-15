@@ -9,7 +9,7 @@ import sys
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
-import setup
+from src import setup
 import re
 
 setup.books_list = []

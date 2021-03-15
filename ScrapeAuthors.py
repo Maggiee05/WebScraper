@@ -8,7 +8,7 @@ The traversal order is visiting the related authors listed in the GoodReads webs
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
-import setup
+from src import setup
 import re
 
 setup.authors_list = []
@@ -32,6 +32,7 @@ def get_rating_author(soup):
 
 def get_rating_count_author(soup):
     count = soup.find("span", itemprop="ratingCount")["content"].strip()
+    print(count)
     return int(count)
 
 
