@@ -3,7 +3,6 @@ import re
 import flask
 from flask import Flask, request, json, render_template
 
-# from flask_cors import CORS
 
 import setup
 from ScrapeAuthors import scrape_author
@@ -12,9 +11,8 @@ from db import get_db
 
 from queryInterpreter import query_interpreter
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__, template_folder='static')
 # app = Flask(__name__)
-# CORS(app)
 
 myclient = get_db()[2]  # Getting the database
 db = myclient["GoodReads"]
