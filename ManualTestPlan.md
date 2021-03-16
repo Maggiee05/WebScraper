@@ -79,6 +79,8 @@ You will have the search results for the author_id rendered. Including features 
 
 ![](img/p7.jpg)
 
+You will see the notification of error message.
+
 
 ### Delete Request
 
@@ -98,6 +100,8 @@ You will be notified with the success message. And the book with this book_id is
 
 ![](img/p10.jpg)
 
+You will see the notification of error message.
+
 - If you enter a valid author_id and click **Delete**
 
 ![](img/p11.jpg)
@@ -108,4 +112,43 @@ You will be notified with the success message. And the author with this author_i
 
 ![](img/p12.jpg)
 
+You will see the notification of error message.
 
+
+### Put Request
+
+- **The third category is the PUT request**
+
+![](img/p16.jpg)
+
+*We have book_id/author_id and multiple fields for user to input:*
+
+- If you enter valid book_id and attributes and click **Update**
+
+![](img/p17.jpg)
+
+You will be notified with the success message. And the above data will be updated to the corresponding book_id in database.
+
+- If you enter a invalid book_id
+
+![](img/p18.jpg)
+
+You will see the notification of error message.
+
+### Post Request
+
+- **The last category is the POST request**
+
+![](img/p14.jpg)
+
+*We have multiple fields for user to input:*
+
+- If you enter valid attributes and click **Insert**
+
+![](img/p15.jpg)
+
+You will be notified with the success message. And the above data will be inserted to the database.
+
+- If there are some errors inserting the information
+
+You will be notified with the error message "Failed to insert. Please try again".
