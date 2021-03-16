@@ -59,7 +59,7 @@ function put_request(category) {
     var value = document.getElementById(val_str).value;
     var url = 'http://127.0.0.1:5000/' + category + '?id=' + info_id;
     var new_dict = {};
-    if (attribue == "rating") {
+    if (attribute == "rating") {
         new_dict[attribute] = parseFloat(value);
     } else if (attribute == "review_count" || (attribute == "rating_count")) {
         new_dict[attribute] = parseInt(value);
