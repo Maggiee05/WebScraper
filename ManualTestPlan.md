@@ -6,11 +6,13 @@
 - Windows 7
 
 #### Testing IDE
-- PyCharm CE
 - Visual Studio Code
 
-#### Project JDK
+#### Project Requirement
 - Python 3.8
+- Flask
+- JavaScript
+- Html
 
 
 ---
@@ -20,96 +22,133 @@
 
 - cd sp21-cs242-assignment2
 
-- Open the project in PyCharm
+- Open the project in VSCode
 
-- You should have a proper project structure looks like
 
-![](img/structure.jpg)
+- Make sure you have Flask installed and is up to date
 
-- Make sure you have the following installed
-
-![](img/intepreter.jpg)
-
-- You should also have MongoDB Compass downloaded for database access.
-    https://www.mongodb.com/try/download/compass
+    ```pip install Flask```
   
 - Open a terminal and start the project
 
 ---
 ## Manual Tests
+- To start the project, run the api using following command
 
-### Command Line
-- Enter ```python3 main.py -h```. The basic command line interface. 
+    ```export FLASK_APP=api.py```
 
-![](img/command1.jpg)
+    ```flask run```
 
-_We have positional arguments that user must input:_
+- You should be seeing this in terminal
 
-**starting_url** is the starting point for web-scraping. It must be a book page.
+![](img/p1.jpg)
 
-**book_num** is the number of books that will be scraped from. It should be < 200.
+- Then use the following url to see the html page http://127.0.0.1:5000/
 
-**author_num** is the number of authors that will be scraped from. It should be < 50.
+- This is the main page
 
-_We have positional arguments that user can choose to add:_
+![](img/p2.jpg)
 
-**--export EXPORT** is the flag if you want to export the data from database to JSON file.
+### Get Request
 
-**--update UPDATE** is the flag if you want to import JSON file to database.
+- **The first category is the GET request**
 
-- For example: 
+![](img/p3.jpg)
 
-![](img/command2.jpg)
+*We have book_id/author_id for user to input:*
 
-- Run the main.py
+- If you enter a valid book_id and click **Search**
 
-![](img/command3.jpg)
+![](img/p4.jpg)
 
-You should have following messages print out in the terminal. 
-The web-scraping is ongoing.
+You will have the search results for that book_id rendered. Including features with *book_url, title, book_id, ISBN, author_url, author, rating, rating_count, review_count, image_url, similar_books*.
 
-### Accessing the database
+- If you enter an invalid book_id that does not exist in the database
 
-- Connecting MongoDB via MongoDB Compass
+![](img/p5.jpg)
 
-![](img/db1.jpg)
+You will see the notification of error message.
 
-The connection string can be found in .env
+- If you enter a valid author_id and click **Search**
 
-- After connected to the MongoDB
+![](img/p6.jpg)
 
-![](img/db2.jpg)
+You will have the search results for the author_id rendered. Including features with *name, author_url, author_id, rating, rating_count, review_count, image_url, related_authors, author_books*.
 
-You should have a database called **GoodReads** and two collections: **authors**, **books**.
-After the web-scraping is finished, the data scraped will be stored into a MongoDB.
+- If you enter an invalid author_id that does not exist in the database
 
-### Exporting/Importing file into database
+![](img/p7.jpg)
 
-- The user specifies the flag to export/import the database
+You will see the notification of error message.
 
-![](img/json1.jpg)
 
-You should have files names authors.json, books.json look like this.
-And the data would be exported from / imported into the MongoDB
+### Delete Request
 
-### Errors handling
+- **The second category is the DELETE request**
 
-- If the user input an invalid staring url
+![](img/p8.jpg)
 
-![](img/error1.jpg)
+*We have book_id/author_id for user to input:*
 
-Error messages "Book URL not valid" would be generated, and the program would terminate.
+- If you enter a valid book_id and click **Delete**
 
-- If the user input an invalid book_num ( > 200)
+![](img/p9.jpg)
 
-![](img/error2.jpg)
+You will be notified with the success message. And the book with this book_id is deleted from the database.
 
-Error messages "Invalid input. Please enter a book number < 200" would be generated, 
-and the program would terminate.
+- If you enter an invalid book_id that does not exist in the database
 
-- If the user input an invalid author_num ( > 50)
+![](img/p10.jpg)
 
-![](img/error3.jpg)
+You will see the notification of error message.
 
-Error messages "Invalid input. Please enter an author number < 50" would be generated, 
-and the program would terminate.
+- If you enter a valid author_id and click **Delete**
+
+![](img/p11.jpg)
+
+You will be notified with the success message. And the author with this author_id is deleted from the database.
+
+- If you enter an invalid author_id that does not exist in the database
+
+![](img/p12.jpg)
+
+You will see the notification of error message.
+
+
+### Put Request
+
+- **The third category is the PUT request**
+
+![](img/p16.jpg)
+
+*We have book_id/author_id and multiple fields for user to input:*
+
+- If you enter valid book_id and attributes and click **Update**
+
+![](img/p17.jpg)
+
+You will be notified with the success message. And the above data will be updated to the corresponding book_id in database.
+
+- If you enter a invalid book_id
+
+![](img/p18.jpg)
+
+You will see the notification of error message.
+
+### Post Request
+
+- **The last category is the POST request**
+
+![](img/p14.jpg)
+
+*We have multiple fields for user to input:*
+
+- If you enter valid attributes and click **Insert**
+
+![](img/p15.jpg)
+
+You will be notified with the success message. And the above data will be inserted to the database.
+
+- If there are some errors inserting the information
+
+You will be notified with the error message "Failed to insert. Please try again".

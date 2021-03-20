@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='static/mainPage.css'>
+    <script type="text/javascript" src='static/script.js'></script>
+    </head>
+
+    <body>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <p>Enter the id to get book/author information (GET): </p>
+           
+        <form action="" method="get">
+            <p>
+                <label for="book_id" required>book_id :</label>
+                <input type="text" id="book_id1">
+                <button type="button" onclick="get_request('book')">Search</button>
+            </p>
+     
+            <p>
+                <label for="author_id" required>author_id :</label>
+                <input type="text" id="author_id1">
+                <button type="button" onclick="get_request('author')">Search</button>
+            </p>
+        </form>
+        <div id="info1"></div>
+
+        <p>----------------</p>
+        <p>Enter the id to delete a book/author (DELETE): </p>
+        <form action="" method="get">
+            <p>
+                <label for="book_id" required>book_id :</label>
+                <input type="text" id="book_id2">
+                <button type="button" onclick="delete_request('book')">Delete</button>
+            </p>
+
+            <p>
+                <label for="author_id" required>author_id :</label>
+                <input type="text" id="author_id2">
+                <button type="button" onclick="delete_request('author')">Delete</button>
+            </p>
+        </form>
+        <div id="info2"></div>
+
+        <p>----------------</p>
+        <p>Enter the attributes to update a book/author (PUT): </p>
+        <form action="" method="get">
+            <p>
+                <label for="book_id" required>book_id :</label>
+                <input type="text" id="book_id3">
+                <label>Attribute :</label>
+                <input type="text" id="book_attr3">
+                <label>Value :</label>
+                <input type="number" id="book_val3">
+                <button type="button" onclick="put_request('book')">Update</button>
+            </p>
+
+            <p>
+                <label for="author_id" required>author_id :</label>
+                <input type="text" id="author_id3">
+                <label>Attribute :</label>
+                <input type="text" id="author_attr3">
+                <label>Value :</label>
+                <input type="number" id="author_val3">
+                <button type="button" onclick="put_request('author')">Update</button>
+            </p>
+        </form>
+        <div id="info3"></div>
+
+        <p>----------------</p>
+        <p>Enter the attributes to insert a book/author (POST): </p>
+        <form action="" method="get">
+            <p> 
+                <label>Category :</label>
+                <input type="text" id="category_post">
+                <label>id : </label>
+                <input type="text" id="id_post">
+            </p>
+
+            <p>
+                <label>Title/Name :</label>
+                <input type="text" id="name_post">
+                <label>url : </label>
+                <input type="text" id="url_post">
+            </p>
+            
+            <p>
+                <label>Rating :</label>
+                <input type="text" id="rating_post">
+                <label>Rating Count : </label>
+                <input type="number" id="rating_ct_post">
+                <label>Review Count : </label>
+                <input type="number" id="review_ct_post">
+
+            </p>
+
+            <p>
+                <button type="button" onclick="post_request()">Insert</button>
+            </p>
+
+        </form>
+        <div id="info4"></div>
+
+     </body>
+
+</html>

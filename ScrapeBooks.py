@@ -9,8 +9,10 @@ import sys
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
-import setup
+from src import setup
 import re
+
+setup.books_list = []
 
 
 def get_title_book(soup):
@@ -52,17 +54,17 @@ def get_author_book(soup):
 
 def get_rating_book(soup):
     rating = soup.find("span", itemprop="ratingValue").text.strip()
-    return rating
+    return float(rating)
 
 
 def get_rating_count_book(soup):
     rating_count = soup.find("meta", itemprop="ratingCount")["content"].strip()
-    return rating_count
+    return int(rating_count)
 
 
 def get_review_count_book(soup):
     review_count = soup.find("meta", itemprop="reviewCount")["content"].strip()
-    return review_count
+    return int(review_count)
 
 
 def get_image_url_book(soup):

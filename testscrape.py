@@ -1,9 +1,9 @@
 """Unit testing"""
 import unittest
 
+import ScrapeBooks
 import setup
 import ScrapeAuthors
-import ScrapeBooks
 
 
 class TestStringMethods(unittest.TestCase):
@@ -46,6 +46,19 @@ class TestStringMethods(unittest.TestCase):
             "https://www.goodreads.com/book/show/11870085-the-fault-in-our-stars")
         # should still be 2 since duplicated
         self.assertEqual(len(setup.books_list), 2)
+
+    def test_scrape_author(self):
+        test_author = {"name": "Haruki Murakami",
+                       "author_url": "https://www.goodreads.com/author/show/3354.HarukiMurakami"}
+        setup.authors_list.append(test_author)
+        res = ScrapeAuthors.scrape_author(0)
+        res["author_id"] = "3354"
+
+    def test_scrape_book(self):
+        test_book = {"book_url": "https://www.goodreads.com/book/show/11297.Norwegian_Wood"}
+        setup.books_list.append(test_book)
+        res = ScrapeBooks.scrape_book(0)
+        res["title"] = "Norwegian Wood"
 
 
 if __name__ == '__main__':
